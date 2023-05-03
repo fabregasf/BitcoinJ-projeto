@@ -17,6 +17,8 @@ import org.bitcoinj.crypto.TransactionSignature;
 import org.bitcoinj.script.Script;
 import org.bitcoinj.script.ScriptBuilder;
 
+import java.math.BigInteger;
+
 public class ScriptTest extends ScriptBuilder {
 
     private Script myinputscript, myoutputscript;
@@ -27,8 +29,11 @@ public class ScriptTest extends ScriptBuilder {
 
     public ScriptTest(){
         this.builder = new ScriptBuilder();
-        this.dummySig = TransactionSignature.dummy();
+        this.dummySig = TransactionSignature.dummy(); // mudar a assinatura
+        // usando parametros
         this.eckey = new ECKey();
+        System.out.println(this.eckey.toString());
+
         this.myinputscript = this.ScriptInput(dummySig, eckey);
         this.myoutputscript = this.ScriptOutput(myinputscript);
 
