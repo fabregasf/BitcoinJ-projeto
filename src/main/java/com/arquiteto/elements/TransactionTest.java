@@ -14,7 +14,7 @@ public class TransactionTest extends Transaction {
 
     }
 
-    // retorna uma estrutura?
+
     public void getInputOutputs(Transaction tx){
         while(!tx.getInputs().isEmpty()){
             for (TransactionInput ti : tx.getInputs()) {  // show address and funds

@@ -13,7 +13,11 @@ Tentar montar um script com recipiente com chave publica (ECkey). P2PKH
 
 import okhttp3.Address;
 import org.bitcoinj.core.ECKey;
+import org.bitcoinj.core.Transaction;
+import org.bitcoinj.core.TransactionInput;
+import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.crypto.TransactionSignature;
+import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.script.Script;
 import org.bitcoinj.script.ScriptBuilder;
 
@@ -30,18 +34,32 @@ public class ScriptTest extends ScriptBuilder {
     public ScriptTest(){
         this.builder = new ScriptBuilder();
         this.dummySig = TransactionSignature.dummy(); // mudar a assinatura
-        // usando parametros
+        // usando parametros NIST 140-2
         this.eckey = new ECKey();
         System.out.println(this.eckey.toString());
 
         this.myinputscript = this.ScriptInput(dummySig, eckey);
         this.myoutputscript = this.ScriptOutput(myinputscript);
 
+        System.out.println("scriptPubKey: "+this.myoutputscript.toString());
+
+        // program serialized
+        byte[] scriptBytes = myoutputscript.getProgram();
+
+        Transaction tx = new Transaction(MainNetParams.get());
+        // passing the program created in bytes
+        TransactionInput ti = new TransactionInput(MainNetParams.get(), tx, scriptBytes);
+        tx.addInput(ti);
+
+        // Ligar na output do outro programa
+
+
     }
 
     // BIP 16
     public Script ScriptInput(TransactionSignature signature, org.bitcoinj.core.ECKey eckey){
         myinputscript = createInputScript(signature, eckey);
+
         return myinputscript;
     }
     // BIP16

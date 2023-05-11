@@ -33,6 +33,5 @@ public class Btc {
         BtcFactory.getInstance().novoScript();
 
 
-
     }
 }
